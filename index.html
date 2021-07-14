@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da memoria</title>
+    <style>
+        h1,
+        p {
+            text-align: center;
+        }
+
+        #grade {
+            display: flex;
+            flex-wrap: wrap;
+            width: 520px;
+            margin: auto;
+        }
+
+        img {
+            width: 130px;
+        }
+    </style>
+</head>
+
+<body onload="criarGrade()">
+    <h1>Jogo da Memória</h1>
+    <p>Ponstos: <span id="pontos"></span></p>
+
+    <div id="grade"></div>
+    <script>
+        // Arrays contendo as cartas
+        const baralho = [
+
+            {
+                nome: 'vaca',
+                img: "./img/vaca.jpg",
+                audio: './sons/vaca.mp3'
+            },
+            {
+                nome: 'cachorro',
+                img: "./img/cachorro.jpg",
+                audio: './sons/cachorro.mp3'
+            },
+            {
+                nome: 'gato',
+                img: "./img/gato.jpg",
+                audio: './sons/gato.mp3'
+            },
+            {
+                nome: 'leao',
+                img: "./img/leao.jpg",
+                audio: './sons/leao.mp3'
+            },
+            {
+                nome: 'ovelha',
+                img: "./img/ovelha.jpg",
+                audio: './sons/ovelha.mp3'
+            },
+            {
+                nome: "pintinho",
+                img: "./img/pintinho.jpg",
+                audio: './sons/pintinho.mp3'
+            },
+            {
+                nome: 'vaca',
+                img: "./img/vaca.jpg",
+                audio: './sons/vaca.mp3'
+            },
+            {
+                nome: 'cachorro',
+                img: "./img/cachorro.jpg",
+                audio: './sons/cachorro.mp3'
+            },
+            {
+                nome: 'gato',
+                img: "./img/gato.jpg",
+                audio: './sons/gato.mp3'
+            },
+            {
+                nome: 'leao',
+                img: "./img/leao.jpg",
+                audio: './sons/leao.mp3'
+            },
+            {
+                nome: 'ovelha',
+                img: "./img/ovelha.jpg",
+                audio: './sons/ovelha.mp3'
+            },
+            {
+                nome: "pintinho",
+                img: "./img/pintinho.jpg",
+                audio: './sons/pintinho.mp3'
+            }
+        ];
+            // mantendo o baralho sempre dinamico
+        baralho.sort(() => {
+            return 0.5 - Math.random();
+        })
+
+        //puxando os ids HTML
+        const pontuacao = document.querySelector('#pontos');
+        const grade = document.querySelector("#grade");
+        //declarando pontos e cartas escolhidas
+        let ponto;
+        let escolhidas = [];
+        // criando a grade 
+        function criarGrade() {
+            ponto = 0;
+            pontuacao.innerHTML = "0"
+            for (let i = 0; i < baralho.length; i++) {
+                let carta = document.createElement('img');
+                carta.id = i;
+                carta.name = baralho[i].nome;
+                carta.src = "./img/js.jpg";
+                carta.addEventListener('click', escolherCarta);
+
+                grade.appendChild(carta);
+            }
+        }
+        // escolhendo a carta e dando dinamismo ao baralho e a pontuação
+        function escolherCarta() {
+            let carta = this;
+            carta.src = baralho[carta.id].img;
+            escolhidas.push(carta);
+
+            if (escolhidas.length == 2) {
+                setTimeout(() => {
+                    let carta1 = escolhidas[0];
+                    let carta2 = escolhidas[1];
+
+                    if (carta1.name == carta2.name) {
+                        carta1.src = "./img/branco.jpg";
+                        carta2.src = "./img/branco.jpg";
+                        carta1.removeEventListener('click', escolherCarta);
+                        carta2.removeEventListener('click', escolherCarta);
+                        ponto++
+                        pontuacao.innerText = ponto;
+                    } else {
+                        carta1.src = "./img/js.jpg";
+                        carta2.src = "./img/js.jpg";
+                    }
+
+                    if (ponto == baralho.length / 2) {
+
+                        alert('Parabéns você venceu !!');
+                        grade.innerHTML = '';
+                        criarGrade();
+                    }
+                    escolhidas = [];
+                }, 1000);
+
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>
