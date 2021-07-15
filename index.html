@@ -147,6 +147,9 @@
 
                         alert('Parabéns você venceu !!');
                         grade.innerHTML = '';
+                        baralho.sort(() => {
+                            return 0.5 - Math.random();
+                        })
                         criarGrade();
                     }
                     escolhidas = [];
